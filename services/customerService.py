@@ -12,7 +12,7 @@ def save(customer_data):
     with Session(db.engine) as session:
         try:
             if customer_data['name']== 'Failure':
-                raise Exception('Failuure condition triggered')
+                raise Exception('Failure condition triggered')
             
             with session.begin():
                 new_customer = Customer(name=customer_data['name'], email = customer_data['email'], phone =customer_data['phone'])
