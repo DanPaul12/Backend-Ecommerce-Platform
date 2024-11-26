@@ -22,6 +22,8 @@ def blue_print_config(app):
 if __name__ == '__main__':
     app = create_app('DevelopmentConfig')
 
+    blue_print_config(app)
+
     with app.app_context():
         db.drop_all()
         db.create_all()
