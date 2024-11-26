@@ -11,6 +11,8 @@ from models.product import Product
 from models.orderProduct import order_product
 
 from routes.customerBP import customer_blueprint
+from routes.orderBP import order_blueprint
+from routes.productBP import product_blueprint
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -25,6 +27,8 @@ def create_app(config_name):
 
 def blue_print_config(app):
     app.register_blueprint(customer_blueprint, url_prefix='/customers')
+    app.register_blueprint(order_blueprint, url_prefix='/orders')
+    app.register_blueprint(product_blueprint, url_prefix='/products')
 
 def configure_rate_limit():
     limiter.limit('5 per day')(customer_blueprint)
