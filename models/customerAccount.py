@@ -8,3 +8,5 @@ class CustomerAccount(Base):
     password: Mapped[str] = mapped_column(db.String(255), nullable=False)
     customer_id: Mapped[int] = mapped_column(db.ForeignKey('Customers.id'))
     customer: Mapped['Customer'] = db.relationship(back_populates='customer_account')
+
+    #what is back_populates and how does it relate to foreign key
