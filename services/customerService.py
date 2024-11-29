@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from database import db
 from models.customer import Customer
+from models.customerAccount import CustomerAccount
+from utils.util import encode_token
 from circuitbreaker import circuit
 from sqlalchemy import select
 
@@ -28,3 +30,5 @@ def find_all():
     query = select(Customer)
     customers = db.session.execute(query).scalars().all()
     return customers
+
+
