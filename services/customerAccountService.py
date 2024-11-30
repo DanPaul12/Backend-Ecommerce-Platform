@@ -14,8 +14,9 @@ def find_all():                #what kind of join is this
 
 def login_customer(username, password):
     customer = db.session.execute(select(CustomerAccount).where(CustomerAccount.username == username, CustomerAccount.password == password)).scalar_one_or_none()
+    role_names = [role.role_name for role in customer.roles]
     if customer:
-        auth_token = encode_token(customer.id)
+        auth_token = encode_token(customer.id, role_names)
         resp = {
             "status":"succes",
             "message": "logged in",
