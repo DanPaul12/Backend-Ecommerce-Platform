@@ -55,7 +55,7 @@ def init_customers_info_data():
 
             session.add_all(customers)
             session.add_all(customerAccounts)
-
+'''
 def init_roles_data():
     with Session(db.engine) as session:
         with session.begin():
@@ -75,6 +75,7 @@ def init_roles_customers_data():
                 CustomerManagementRole(customer_management_id=2, role_id=3),
             ]
             session.add_all(roles_customers)
+            '''
 
 if __name__ == '__main__':
     app = create_app('DevelopmentConfig')
@@ -83,11 +84,11 @@ if __name__ == '__main__':
     configure_rate_limit()
     
 
-    with app.app_context():
-        db.drop_all()
+    with app.app_context():  
+        #db.drop_all()
         db.create_all()
-        init_roles_data()
+        #init_roles_data()
         init_customers_info_data
-        init_roles_customers_data()
+        #init_roles_customers_data()
 
     app.run(debug=True)
