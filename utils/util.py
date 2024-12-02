@@ -2,20 +2,23 @@ from datetime import timedelta, datetime
 import jwt
 import os
 from dotenv import load_dotenv
-from flask import request, jsonify
+from flask import request, jsonify, current_app
 from functools import wraps
 
 load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+
 def encode_token(user_id,role_names):
     payload={
-        'exp': datetime.now() + timedelta(days=1),
-        'iat': datetime.now(),
+        'exp': int((datetime.now() + timedelta(days=1)).timestamp()),  # Expiration time
+        'iat': int(datetime.now().timestamp()), 
         'sub':user_id,
         'roles': role_names
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    print(SECRET_KEY)
+    print('token sent to postman', token)
     return token
 
 def token_required(f):
@@ -23,11 +26,14 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token=None
         if 'Authorization' in request.headers:
+            print('authorization header received', request.headers.get('Authorization'))
             try:
                 token = request.headers['Authorization'].split(' ')[1]
-                print('Token:', token)
-                payload = jwt.decode(token, SECRET_KEY, algorithms='HS256')
-                print(payload['sub'])
+                print('Token received from postman:', token)
+                #print(SECRET_KEY)
+                payload = jwt.decode(token, SECRET_KEY, algorithm='HS256')
+                #payload = jwt.decode(token, options={'verify_signature': False})
+                print('decoded payload without signature verification', payload)
             except jwt.ExpiredSignatureError:
                 return jsonify({'message':'token expired'})
             except jwt.InvalidTokenError:
@@ -50,7 +56,7 @@ def role_required(role):
                 return jsonify({'message':'token is missing'}), 401
             
             try:
-                payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+                payload = jwt.decode(token, SECRET_KEY, algorithm='HS256')
             except jwt.ExpiredSignatureError:
                 return jsonify({'message':'expired token'}), 401
             except jwt.InvalidTokenError:

@@ -4,6 +4,8 @@ from schema import ma
 from limiter import limiter
 from caching import cache
 from sqlalchemy.orm import Session
+from flask_cors import CORS
+from werkzeug.security import generate_password_hash
 
 from models.customer import Customer
 from models.customerAccount import CustomerAccount
@@ -18,6 +20,8 @@ from routes.orderBP import order_blueprint
 from routes.productBP import product_blueprint
 from routes.customerAccountBP import customer_account_blueprint
 
+
+
 def create_app(config_name):
     app = Flask(__name__)
 
@@ -26,6 +30,7 @@ def create_app(config_name):
     ma.init_app(app)
     cache.init_app(app)
     limiter.init_app(app)
+    CORS(app)
 
     return app
 
@@ -48,9 +53,9 @@ def init_customers_info_data():
             ] 
 
             customerAccounts = [
-                CustomerAccount(username= 'ctm1', password= 'password1', customer_id=1),
-                CustomerAccount(username= 'ctm2', password= 'password2', customer_id=2),
-                CustomerAccount(username= 'ctm3', password= 'password3', customer_id=3),
+                CustomerAccount(username= 'ctm1', password= generate_password_hash('password1'), customer_id=1),
+                CustomerAccount(username= 'ctm2', password= generate_password_hash('password2'), customer_id=2),
+                CustomerAccount(username= 'ctm3', password= generate_password_hash('password3'), customer_id=3),
             ]
 
             session.add_all(customers)
@@ -81,7 +86,7 @@ if __name__ == '__main__':
     app = create_app('DevelopmentConfig')
 
     blue_print_config(app)
-    configure_rate_limit()
+    #configure_rate_limit()
     
 
     with app.app_context():  
