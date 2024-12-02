@@ -81,12 +81,13 @@ if __name__ == '__main__':
 
     blue_print_config(app)
     configure_rate_limit()
-    init_roles_data()
-    init_customers_info_data
-    init_roles_customers_data()
+    
 
     with app.app_context():
-        db.drop_all()
+        #db.drop_all()
         db.create_all()
+        init_roles_data()
+        init_customers_info_data
+        init_roles_customers_data()
 
     app.run(debug=True)
