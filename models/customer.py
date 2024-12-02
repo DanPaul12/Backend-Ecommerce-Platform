@@ -9,5 +9,7 @@ class Customer(Base):
     email: Mapped[str] = mapped_column(db.String(320))
     phone: Mapped[str] = mapped_column(db.String(15))
 
+
     customer_account: Mapped["CustomerAccount"] = db.relationship(back_populates="customer")
     orders: Mapped[List['Order']] = db.relationship(back_populates='customer')
+    
