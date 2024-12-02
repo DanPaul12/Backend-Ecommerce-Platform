@@ -4,7 +4,7 @@ from models.schemas.customerAccountSchema import customer_account_schema
 from services import customerService, customerAccountService
 from marshmallow import ValidationError
 from caching import cache
-from utils.util import token_required
+from utils.util import token_required, role_required
 
 def save():
     try:
@@ -19,7 +19,8 @@ def save():
         return jsonify({'message':'fallback triggered'}, {'body':customer_data}), 400
 
 #@cache.cached(timeout=60) 
-@token_required   
+@token_required 
+@role_required('admin')  
 def find_all():
     customers = customerService.find_all()
     return customers_schema.jsonify(customers), 200

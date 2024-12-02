@@ -10,7 +10,7 @@ class CustomerAccount(Base):
     customer_id: Mapped[int] = mapped_column(db.ForeignKey('Customers.id'))
 
     
-    customer: Mapped['Customer'] = db.relationship(back_populates='customer_account')
+    customer: Mapped['Customer'] = db.relationship(back_populates='customer_account', lazy='noload')
     roles: Mapped[List['Role']] = db.relationship(secondary='Customer_Management_Roles')
     
 
