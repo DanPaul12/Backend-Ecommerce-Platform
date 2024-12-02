@@ -31,7 +31,7 @@ def token_required(f):
                 token = request.headers['Authorization'].split(' ')[1]
                 print('Token received from postman:', token)
                 #print(SECRET_KEY)
-                payload = jwt.decode(token, SECRET_KEY, algorithm='HS256')
+                payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
                 #payload = jwt.decode(token, options={'verify_signature': False})
                 print('decoded payload without signature verification', payload)
             except jwt.ExpiredSignatureError:
@@ -56,7 +56,7 @@ def role_required(role):
                 return jsonify({'message':'token is missing'}), 401
             
             try:
-                payload = jwt.decode(token, SECRET_KEY, algorithm='HS256')
+                payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             except jwt.ExpiredSignatureError:
                 return jsonify({'message':'expired token'}), 401
             except jwt.InvalidTokenError:

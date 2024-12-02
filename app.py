@@ -53,9 +53,9 @@ def init_customers_info_data():
             ] 
 
             customerAccounts = [
-                CustomerAccount(username= 'ctm1', password= generate_password_hash('password1'), customer_id=1),
-                CustomerAccount(username= 'ctm2', password= generate_password_hash('password2'), customer_id=2),
-                CustomerAccount(username= 'ctm3', password= generate_password_hash('password3'), customer_id=3),
+                CustomerAccount(username= 'ctm1', password= generate_password_hash('password1'), customer_id=4),
+                CustomerAccount(username= 'ctm2', password= generate_password_hash('password2'), customer_id=5),
+                CustomerAccount(username= 'ctm3', password= generate_password_hash('password3'), customer_id=6),
             ]
 
             session.add_all(customers)

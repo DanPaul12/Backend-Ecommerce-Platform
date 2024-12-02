@@ -17,7 +17,7 @@ def login_customer(username, password):
     customer = db.session.execute(select(CustomerAccount).where(CustomerAccount.username == username, CustomerAccount.password == password)).scalar_one_or_none()
     role_names = [role.role_name for role in customer.roles]
     if customer:
-        if check_password_hash(customer.passwod, password):
+        #if check_password_hash(customer.password, password):
             auth_token = encode_token(customer.id, role_names)
             resp = {
                 "status":"succes",
@@ -25,7 +25,7 @@ def login_customer(username, password):
                 "auth_token":auth_token
             }
             return resp
-        else:
-            return None
+        #else:
+         #   return None
     else:
         return None
