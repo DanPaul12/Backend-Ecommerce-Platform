@@ -20,7 +20,7 @@ def login_customer(username, password):
         #if check_password_hash(customer.password, password):
             auth_token = encode_token(customer.id, role_names)
             resp = {
-                "status":"succes",
+                "status":"success",
                 "message": "logged in",
                 "auth_token":auth_token
             }

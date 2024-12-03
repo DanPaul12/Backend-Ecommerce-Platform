@@ -5,6 +5,7 @@ circuitbreaker==2.0.0
 click==8.1.7
 cryptography==44.0.0
 Deprecated==1.2.15
+Faker==24.9.0
 Flask==3.0.3
 Flask-Caching==2.3.0
 Flask-Cors==4.0.0
@@ -28,8 +29,10 @@ packaging==24.2
 pycparser==2.22
 Pygments==2.18.0
 PyJWT==2.8.0
+python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 rich==13.9.4
+six==1.16.0
 SQLAlchemy==2.0.36
 typing_extensions==4.12.2
 Werkzeug==3.0.2
