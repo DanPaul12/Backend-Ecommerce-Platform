@@ -4,7 +4,7 @@ from models.product import Product
 from flask import jsonify
 from circuitbreaker import circuit
 from sqlalchemy import select
-from sqlalchemy.orm import sql
+
 
 def save(product_data):
     with Session(db.engine) as session:
@@ -20,7 +20,7 @@ def update_product(id, new_data):
         with Session(db.engine) as session:
             with session.begin():
                 query = select(Product).where(Product.id == id)
-                product = db.session.execute(query)
+                product = db.session.execute(query).scalar_one_or_none()
                 product.name = new_data['name']
                 product.price = new_data['price']
                 session.commit()
