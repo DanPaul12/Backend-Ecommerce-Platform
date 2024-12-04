@@ -16,3 +16,7 @@ def login_customer():
             "message":"failure"
         }
         return jsonify(resp), 400
+
+def find_account(id):
+    account = customerAccountService.find_account(id)
+    return customer_accounts_schema.jsonify(account)

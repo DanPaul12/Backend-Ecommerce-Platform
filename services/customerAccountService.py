@@ -29,3 +29,8 @@ def login_customer(username, password):
          #   return None
     else:
         return None
+    
+def find_account(id):
+    query = select(CustomerAccount).where(CustomerAccount.id == id)
+    account = db.session.execute(query).scalar_one_or_none()
+    return account
