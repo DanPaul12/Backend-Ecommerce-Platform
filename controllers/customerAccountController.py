@@ -1,4 +1,4 @@
-from models.schemas.customerAccountSchema import customer_accounts_schema
+from models.schemas.customerAccountSchema import customer_accounts_schema, customer_account_schema
 from services import customerAccountService
 from flask import request, jsonify
 
@@ -19,4 +19,4 @@ def login_customer():
 
 def find_account(id):
     account = customerAccountService.find_account(id)
-    return customer_accounts_schema.jsonify(account)
+    return customer_account_schema.jsonify(account)

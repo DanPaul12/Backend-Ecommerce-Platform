@@ -15,3 +15,8 @@ def save():
         return product_schema.jsonify(product_save), 201
     except ValueError as e:
         return jsonify({'error': str(e)}), 400
+    
+def update(id):
+    new_data = product_schema.load(request.json)
+    return productService.update_product(new_data, id)
+    
