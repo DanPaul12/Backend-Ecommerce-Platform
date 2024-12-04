@@ -49,6 +49,21 @@ paths:
               value:
                 status: 'error'
                 message: 'Invalid credentials'
+  /customers:
+    get:
+      tags:
+        - customers
+      summary: 'Get All Customers'
+      description: 'Retrieve a list of all customers'
+      responses:
+        '200':
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Customer'
+      security: 
+        - bearerAuth: []
 definitions: 
   LoginCredentials:
     type: 'object'
@@ -90,3 +105,24 @@ definitions:
       required:
         - 'status'
         - 'message'
+  Customer:
+    type: 'object'
+    properties:
+      name:
+        type: 'string'
+        description: 'Customer name'
+      email:
+        type: 'string'
+        description: 'Customer email'
+      phone:
+        type: 'string'
+        description: 'Customer phoone number'
+      id:
+        type: 'integer'
+        format: 'int64'
+        description: 'Customer unique id'
+    required:
+      - 'name'
+      - 'email'
+      - 'phone'
+      - 'id'
