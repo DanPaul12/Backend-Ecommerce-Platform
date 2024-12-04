@@ -40,6 +40,15 @@ paths:
                 auth_token: 'eyJHbGc10i...'
                 message: 'Login successful'
                 status: 'success'
+        400:
+          description: 'Bad request'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Invalid credentials'
 definitions: 
   LoginCredentials:
     type: 'object'
@@ -69,3 +78,15 @@ definitions:
     required:
       - 'auth_token'
       - 'message'
+  Error:
+    type: 'object'
+    properties:
+      status:
+        type: 'string'
+        description: 'Status of the error'
+      message:
+        type: 'string'
+        description: 'Description of the error'
+      required:
+        - 'status'
+        - 'message'

@@ -6,6 +6,7 @@ from caching import cache
 from sqlalchemy.orm import Session
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash
+from flask_swagger_ui import get_swaggerui_blueprint
 
 from models.customer import Customer
 from models.customerAccount import CustomerAccount
@@ -20,6 +21,14 @@ from routes.orderBP import order_blueprint
 from routes.productBP import product_blueprint
 from routes.customerAccountBP import customer_account_blueprint
 
+SWAGGER_URL = '/api/docs'
+API_URL = '/static/swagger.yaml'
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={'app_name': 'E-Commerce API'}
+)
 
 
 def create_app(config_name):
@@ -39,6 +48,7 @@ def blue_print_config(app):
     app.register_blueprint(order_blueprint, url_prefix='/orders')
     app.register_blueprint(product_blueprint, url_prefix='/products')
     app.register_blueprint(customer_account_blueprint, url_prefix='/accounts')
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 def configure_rate_limit():
     limiter.limit('5 per day')(customer_blueprint)
