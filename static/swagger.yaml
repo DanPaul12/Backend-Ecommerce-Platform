@@ -62,6 +62,24 @@ paths:
             type: 'array'
             items:
               $ref: '#/definitions/Customer'
+        401:
+          description: 'Unauthorized'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'token is missing | token expired | invalid token'
+        403:
+          description: 'Forbidden'
+          schema: 
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value: 
+                status: 'error'
+                message: 'user does not have the required role'
       security: 
         - bearerAuth: []
 definitions: 
