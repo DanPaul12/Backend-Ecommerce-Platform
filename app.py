@@ -97,3 +97,5 @@ if __name__ == '__main__':
         #init_roles_customers_data()
 
     app.run(debug=True)
+
+    

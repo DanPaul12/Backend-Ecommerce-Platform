@@ -1,0 +1,71 @@
+swagger: '2.0'
+info:
+  title: 'E-Commerce API'
+  description: 'api'
+  version: '1.0.0'
+host: '127.0.0.1:5000'
+schemes:
+  - 'http'
+consumes:
+  - 'application/json'
+produces:
+  - 'application/json'
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths: 
+  /accounts/login:
+    post:
+      tags:
+        - accounts
+      summary: 'Login endpoint'
+      description: 'Endpoint for user authentication'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Credentials for login'
+          required: true
+          schema:
+            $ref: '#/definitions/LoginCredentials'
+      responses:
+        200:
+          description: 'Login successful'
+          schema: 
+            $ref: '#/definitions/LoginResponse'
+          examples:
+            application/json:
+              value:
+                auth_token: 'eyJHbGc10i...'
+                message: 'Login successful'
+                status: 'success'
+definitions: 
+  LoginCredentials:
+    type: 'object'
+    properties:
+      username:
+        type: 'string'
+        description: 'Username'
+      password:
+        type: 'string'
+        format: 'password'
+        description: 'Password'
+    required:
+      - 'username'
+      - 'password'
+  LoginResponse:
+    type: 'object'
+    properties:
+      auth_token:
+        type: 'string'
+        description: 'Authentication token'
+      message:
+        type: 'string'
+        description: 'message indicating success or failure'
+      status:
+        type: 'string'
+        description: 'Status of the operation'
+    required:
+      - 'auth_token'
+      - 'message'
