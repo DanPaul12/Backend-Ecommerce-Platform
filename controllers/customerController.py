@@ -25,3 +25,6 @@ def find_all():
     customers = customerService.find_all()
     return customers_schema.jsonify(customers), 200
 
+def find_customer(id):
+    customer = customerService.find_one(id)
+    return customer_schema.jsonify(customer), 200

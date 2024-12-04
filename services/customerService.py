@@ -31,4 +31,9 @@ def find_all():
     customers = db.session.execute(query).scalars().all()
     return customers
 
+def find_one(id):
+    query = select(Customer).where(Customer.id == id)
+    customer = db.session.execute(query).scalar_one_or_none()
+    return customer
+
 
