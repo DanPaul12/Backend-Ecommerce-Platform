@@ -16,6 +16,69 @@ securityDefinitions:
     name: Authorization
     in: header
 paths: 
+  /accounts:
+    post:
+      tags:
+        - accounts
+      summary: 'Add Account'
+      description: 'Endpoint for adding ana account'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Credentials for login'
+          required: true
+          schema:
+            $ref: '#/definitions/LoginCredentials'
+      responses:
+        200:
+          description: 'Login successful'
+          schema: 
+            $ref: '#/definitions/LoginResponse'
+          examples:
+            application/json:
+              value:
+                auth_token: 'eyJHbGc10i...'
+                message: 'Login successful'
+                status: 'success'
+        400:
+          description: 'Bad request'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Invalid credentials'
+    get:
+      tags:
+        - accounts
+      summary: 'Get All Accounts'
+      description: 'Retrieve a list of all accounts'
+      responses:
+        '200':
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Account'
+        401:
+          description: 'Unauthorized'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'token is missing | token expired | invalid token'
+        403:
+          description: 'Forbidden'
+          schema: 
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value: 
+                status: 'error'
+                message: 'user does not have the required role'
   /accounts/login:
     post:
       tags:
@@ -49,6 +112,78 @@ paths:
               value:
                 status: 'error'
                 message: 'Invalid credentials'
+  /accounts/id:              
+    put:
+      tags:
+        - accounts
+      summary: 'Update An Account'
+      description: 'Update information for one Account'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'New Data for Account'
+          required: true
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Account'
+        404:
+          description: 'Account not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Bad Request'
+    delete:
+      tags:
+        - accounts
+      summary: 'Delete A Account'
+      description: 'delete information for one Account'
+      parameters:
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Account'
+        404:
+          description: 'Account not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Bad Request'
+    get:
+      tags:
+        - accounts
+      summary: 'Get Account by ID'
+      description: 'Retrieve one Account by id'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Account'
+        404:
+          description: 'Account Not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Account is missing or does not exist'
   /customers:
     get:
       tags:
@@ -80,6 +215,124 @@ paths:
               value: 
                 status: 'error'
                 message: 'user does not have the required role'
+    post:
+      tags:
+        - customers
+      summary: 'Save a customer to database'
+      description: 'Save one customer to database'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Data for Customer'
+          required: true
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Customer'
+        401:
+          description: 'Unauthorized'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'token is missing | token expired | invalid token'
+        403:
+          description: 'Forbidden'
+          schema: 
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value: 
+                status: 'error'
+                message: 'user does not have the required role'
+  /customers/id:              
+    put:
+      tags:
+        - customers
+      summary: 'Update A Customer'
+      description: 'Update information for one Customer'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'New Data for Customer'
+          required: true
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Customer'
+        404:
+          description: 'Customer not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Bad Request'
+    delete:
+      tags:
+        - customers
+      summary: 'Delete A Customer'
+      description: 'delete information for one Customer'
+      parameters:
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Customer'
+        404:
+          description: 'Customer not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Bad Request'
+        400:
+          description: 'Customer has account'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Account must be deleted before customer can be'
+    get:
+      tags:
+        - customers
+      summary: 'Get Customer by ID'
+      description: 'Retrieve one Customer by id'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Customer'
+        404:
+          description: 'Customer Not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Customer is missing or does not exist'
   /products:
     get:
       tags:
@@ -148,6 +401,78 @@ paths:
               value: 
                 status: 'error'
                 message: 'user does not have the required role'
+  /products/id:              
+    put:
+      tags:
+        - products
+      summary: 'Update A Product'
+      description: 'Update information for one Product'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'New Data for Product'
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Product'
+        404:
+          description: 'Product not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Bad Request'
+    delete:
+      tags:
+        - products
+      summary: 'Delete A Product'
+      description: 'delete information for one Product'
+      parameters:
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Product'
+        404:
+          description: 'Product not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Bad Request'
+    get:
+      tags:
+        - products
+      summary: 'Get Product by ID'
+      description: 'Retrieve one product by id'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Product'
+        404:
+          description: 'Product Not Found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Product is missing or does not exist'
   /orders:
     get:
       tags:
@@ -285,6 +610,26 @@ definitions:
         type: 'integer'
         format: 'int64'
         description: 'Customer unique id'
+    required:
+      - 'name'
+      - 'price'
+  Account:
+    type: 'object'
+    properties:
+      username:
+        type: 'string'
+        description: 'Product name'
+      password:
+        type: 'string'
+        description: 'Product name'
+      customer_id:
+        type: 'integer'
+        format: 'int64'
+        description: 'Customer unique id'
+      id:
+        type: 'integer'
+        format: 'int64'
+        description: 'unique account id'
     required:
       - 'name'
       - 'price'

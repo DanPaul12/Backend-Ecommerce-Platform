@@ -18,7 +18,7 @@ def save():
     else:
         return jsonify({'message':'fallback triggered'}, {'body':customer_data}), 400
 
-#@cache.cached(timeout=60) 
+@cache.cached(timeout=60) 
 @token_required 
 @role_required('admin')  
 def find_all():

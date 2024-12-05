@@ -51,7 +51,7 @@ def blue_print_config(app):
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 def configure_rate_limit():
-    limiter.limit('5 per day')(customer_blueprint)
+    limiter.limit('100 per day')(customer_blueprint)
 
 def init_customers_info_data():
     with Session(db.engine) as session:
@@ -96,7 +96,7 @@ if __name__ == '__main__':
     app = create_app('DevelopmentConfig')
 
     blue_print_config(app)
-    #configure_rate_limit()
+    configure_rate_limit()
     
 
     with app.app_context():  
