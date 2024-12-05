@@ -25,5 +25,7 @@ def delete(id):
 
 def find(id):
     product = productService.find_product(id)
+    if not product:
+        return {'message': 'Product not found'}, 404
     return product_schema.jsonify(product)
     
