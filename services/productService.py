@@ -15,16 +15,35 @@ def save(product_data):
         session.refresh(new_product)
         return new_product
     
+def find_product(id):
+    with Session(db.engine) as session:   #when to use this vs when not to use this
+        with session.begin():
+            query = select(Product).where(Product.id==id)
+            product = db.session.execute(query).scalar_one_or_none()
+            return product
+    
 def update_product(id, new_data):
     try:
         with Session(db.engine) as session:
             with session.begin():
-                query = select(Product).where(Product.id == id)
-                product = db.session.execute(query).scalar_one_or_none()
+                product = session.query(Product).filter_by(id=id).first()
+                print(product)
+                if not product:
+                    return {'message': 'Product not found'}, 404
+                print(new_data)
                 product.name = new_data['name']
                 product.price = new_data['price']
                 session.commit()
                 return jsonify({'message':'product updated'}), 201
-    except Exception as e:
-        session.rollback()  
+    except Exception as e: 
         return {'message': 'An error occurred while updating the product', 'error': str(e)}, 500
+    
+def delete_product(id):
+    with Session(db.engine) as session:
+            with session.begin():
+                product = session.query(Product).filter_by(id=id).first()
+                if not product:
+                    return {'message': 'Product not found'}, 404
+                session.delete(product)
+                session.commit()
+                return jsonify({'message':'product deleted'}), 201

@@ -18,5 +18,12 @@ def save():
     
 def update(id):
     new_data = product_schema.load(request.json)
-    return productService.update_product(new_data, id)
+    return productService.update_product(id, new_data)
+
+def delete(id):
+    return productService.delete_product(id)
+
+def find(id):
+    product = productService.find_product(id)
+    return product_schema.jsonify(product)
     
