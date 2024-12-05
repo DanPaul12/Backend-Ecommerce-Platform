@@ -28,3 +28,10 @@ def find_all():
 def find_customer(id):
     customer = customerService.find_one(id)
     return customer_schema.jsonify(customer), 200
+
+def update_customer(id):
+    new_data = customer_schema.load(request.json)
+    return customerService.update_customer(id, new_data)
+
+def delete_customer(id):
+    return customerService.delete_customer(id)

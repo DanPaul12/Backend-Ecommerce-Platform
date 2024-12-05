@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from models.schemas.productSchema import product_schema
+from models.schemas.productSchema import product_schema, products_schema
 from services import productService
 from marshmallow import ValidationError
 from caching import cache
@@ -28,4 +28,7 @@ def find(id):
     if not product:
         return {'message': 'Product not found'}, 404
     return product_schema.jsonify(product)
-    
+
+def find_all():
+    products = productService.find_all()
+    return products_schema.jsonify(products)

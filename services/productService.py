@@ -16,13 +16,18 @@ def save(product_data):
         return new_product
     
 def find_product(id):
-    with Session(db.engine) as session:   #when to use this vs when not to use this
+    with Session(db.engine) as session:   #when to use this vs when not to use this vs (find all)
         with session.begin():
             query = select(Product).where(Product.id==id)
             product = db.session.execute(query).scalar_one_or_none()
             if product == {}:
                 return jsonify({'message': 'Product not found'}), 404
             return product
+        
+def find_all():
+    query = select(Product)    
+    products = db.session.execute(query).scalars().all()
+    return products
     
 def update_product(id, new_data):
     try:
