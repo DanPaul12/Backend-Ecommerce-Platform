@@ -16,7 +16,7 @@ def save(customer_data):
         try:
             if customer_data['name']== 'Failure':
                 raise Exception('Failure condition triggered')
-            
+            print(customer_data)
             with session.begin():
                 new_customer = Customer(name=customer_data['name'], email = customer_data['email'], phone =customer_data['phone'])
                 session.add(new_customer)

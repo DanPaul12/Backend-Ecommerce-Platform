@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 from faker import Faker
 from werkzeug.security import generate_password_hash
 from services.customerAccountService import login_customer
+from services.customerService import save
 
 class TestLoginCustomer(unittest.TestCase):
 
@@ -22,6 +23,21 @@ class TestLoginCustomer(unittest.TestCase):
         response = login_customer(mock_user.username, password)
 
         self.assertEqual(response['status'], 'success')
+
+
+
+class TestSaveCustomer(unittest.TestCase):
+    @patch('services.customerService.Session')
+    @patch('services.customerService.db')
+    def test_saave_customer(self, mock_db, mock_session):
+        customer = {'name':'dan', 'email':'dan@gmail.com','phone':'123123123'}
+        mock_session_instance = mock_session.return_value.__enter__.return_value
+        mock_session_instance.add = MagicMock()
+
+        save(customer)
+        call_arguments = mock_session_instance.add.call_args[0][0]
+        mock_session_instance.add.assert_called_once()
+        self.assertEqual(call_arguments.name, customer['name'])
 
 if __name__ == '__main__':
     unittest.main()

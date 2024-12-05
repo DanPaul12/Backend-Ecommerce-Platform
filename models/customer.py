@@ -1,6 +1,8 @@
 from database import db, Base
 from typing import List
 from sqlalchemy.orm import Mapped, mapped_column
+#from models.order import Order   #added for unit test
+#from models.customerAccount import CustomerAccount
 
 class Customer(Base):
     __tablename__ = "Customers"

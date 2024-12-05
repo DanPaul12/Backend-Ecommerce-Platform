@@ -80,6 +80,133 @@ paths:
               value: 
                 status: 'error'
                 message: 'user does not have the required role'
+  /products:
+    get:
+      tags:
+        - products
+      summary: 'Get All Products'
+      description: 'Retrieve a list of all products'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Product'
+        401:
+          description: 'Unauthorized'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'token is missing | token expired | invalid token'
+        403:
+          description: 'Forbidden'
+          schema: 
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value: 
+                status: 'error'
+                message: 'user does not have the required role'
+    post:
+      tags:
+        - products
+      summary: 'Save a product to database'
+      description: 'Save one product to database'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Data for Product'
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Product'
+        401:
+          description: 'Unauthorized'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'token is missing | token expired | invalid token'
+        403:
+          description: 'Forbidden'
+          schema: 
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value: 
+                status: 'error'
+                message: 'user does not have the required role'
+  /orders:
+    get:
+      tags:
+        - orders
+      summary: 'Get All Orders'
+      description: 'Retrieve a list of all orders'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Order'
+        400:
+          description: 'Bad Request'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Bad Request'
+    post:
+      tags:
+        - orders
+      summary: 'Save an order to database'
+      description: 'Save one order to database'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Data for Order'
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        200:
+          description: 'Successful Response'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Order'
+        401:
+          description: 'Unauthorized'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'token is missing | token expired | invalid token'
+        403:
+          description: 'Forbidden'
+          schema: 
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value: 
+                status: 'error'
+                message: 'user does not have the required role'
       security: 
         - bearerAuth: []
 definitions: 
@@ -144,3 +271,37 @@ definitions:
       - 'email'
       - 'phone'
       - 'id'
+  Product:
+    type: 'object'
+    properties:
+      name:
+        type: 'string'
+        description: 'Product name'
+      price:
+        type: 'number'
+        format: 'decimal'
+        description: 'Product price'
+      id:
+        type: 'integer'
+        format: 'int64'
+        description: 'Customer unique id'
+    required:
+      - 'name'
+      - 'price'
+  Order:
+    type: 'object'
+    properties:
+      customer_id:
+        type: 'integer'
+        format: 'int64'
+        description: 'Customer id'
+      products:
+        type: 'array'
+        description: 'product list'
+      date:
+        type: 'string'
+        description: 'date ordered'
+      required:
+        - 'customer_id'
+        - 'products'
+        - 'date'
