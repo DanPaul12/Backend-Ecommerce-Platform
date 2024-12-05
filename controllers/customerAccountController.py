@@ -20,3 +20,10 @@ def login_customer():
 def find_account(id):
     account = customerAccountService.find_account(id)
     return customer_account_schema.jsonify(account)
+
+def update_account(id):
+    new_data = customer_account_schema.load(request.json)
+    return customerAccountService.update_account(id, new_data)
+
+def delete_account(id):
+    return customerAccountService.delete_account(id)

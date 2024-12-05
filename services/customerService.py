@@ -59,6 +59,9 @@ def delete_customer(id):
                 customer = session.query(Customer).filter_by(id=id).first()
                 if not customer:
                     return {'message': 'customer not found'}, 404
+                account = session.query(CustomerAccount).filter_by(customer_id=id).first()
+                if account:
+                    return {'message': 'must delete account first'}, 400
                 session.delete(customer)
                 session.commit()
                 return jsonify({'message':'customer deleted'}), 201
