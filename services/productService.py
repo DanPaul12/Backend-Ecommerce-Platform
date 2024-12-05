@@ -20,7 +20,7 @@ def find_product(id):
         with session.begin():
             query = select(Product).where(Product.id==id)
             product = db.session.execute(query).scalar_one_or_none()
-            if not product:
+            if product == {}:
                 return jsonify({'message': 'Product not found'}), 404
             return product
     
