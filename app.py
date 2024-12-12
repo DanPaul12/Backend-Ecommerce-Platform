@@ -91,6 +91,12 @@ def init_roles_customers_data():
             ]
             session.add_all(roles_customers)
            
+app = create_app('DevelopmentConfig')
+blue_print_config(app)
+configure_rate_limit()
+
+with app.app_context():
+    db.create_all()
 
 # if __name__ == '__main__':
 #     app = create_app('DevelopmentConfig')
