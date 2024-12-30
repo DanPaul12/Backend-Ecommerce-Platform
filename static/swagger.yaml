@@ -21,7 +21,7 @@ paths:
       tags:
         - accounts
       summary: 'Add Account'
-      description: 'Endpoint for adding ana account'
+      description: 'Endpoint for adding an account'
       parameters:
         - in: 'body'
           name: 'body'

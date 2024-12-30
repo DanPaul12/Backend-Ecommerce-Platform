@@ -3,7 +3,6 @@ from sqlalchemy.orm import Mapped, mapped_column
 import datetime
 from typing import List
 from models.orderProduct import order_product
-#from models.product import Product
 
 class Order(Base):
     __tablename__ = "Orders"
